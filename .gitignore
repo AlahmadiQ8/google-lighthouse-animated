@@ -1,0 +1,19 @@
+deploy.js
+
+# Node build artifacts
+node_modules
+npm-debug.log
+
+# Local development
+*.env
+*.dev
+sessions
+.DS_Store
+
+# Compiled CSS
+**/*.css
+**/*.css.map
+**/*.scssc
+
+# Compiled JS 
+site/dist/*
