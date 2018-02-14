@@ -1,37 +1,56 @@
-
-const EDGE = 1300;
-
 TweenMax.set('.cloud-small', {
   visibility: 'visible',
   x: '50%',
 });
 
-const tweenCloudSmall = TweenMax.to('.cloud-small', 40, {
-  x: `+=${EDGE}`, //move each box 500px to right
-  ease: Power0.easeNone,
-  modifiers: {
-    x: function(x) {
-      return (x % EDGE) - EDGE/2;
+const CloudSmall = () => {
+  // TODO: cloud doesn't move exactly within `range`
+  // cloud moves between -range/2 and range/2
+  const range = 1300;
+  const tweenCloudSmall = TweenMax.to('.cloud-small', 40, {
+    x: `+=${range}`,
+    ease: Power0.easeNone,
+    modifiers: {
+      x: x => x % range - range / 2,
     },
-  },
-  repeat: -1,
-});
-
-tweenCloudSmall.seek(25);
+    repeat: -1,
+  });
+  return tweenCloudSmall;
+};
 
 const largeCloud = () => {
-  const initialPosition = 750; 
-  const leftEdge = 1450;
-  return TweenMax.to('.cloud-large', 40, {
+  const initialPosition = 750;
+  const rightEdge = 1450;
+  return TweenMax.to('.cloud-large', 50, {
     ease: Power0.easeNone,
-    x: `+=${leftEdge}`, 
+    x: `+=${rightEdge}`,
     modifiers: {
-      x: function(x) {
-        return (x % (leftEdge + initialPosition)) - initialPosition;
-      }
+      x: x => x % (rightEdge + initialPosition) - initialPosition,
     },
-    repeat: -1
+    repeat: -1,
   });
+};
+
+const mediumCloud = () => {
+  const leftEdge = -1185;
+  const rightEdge = 125;
+  const range = rightEdge - leftEdge;
+  console.log(range);
+  const tweenMediumCloud = TweenMax.to('.cloud-medium', 60, {
+    x: `-=${range}`,
+    ease: Power0.easeNone,
+    modifiers: {
+      x: x => x % range +  Math.abs(rightEdge),
+    },
+    repeat: -1,
+  });
+  return tweenMediumCloud;
 }
 
-largeCloud().play();
+
+const master = new TimelineMax();
+master.add('start');
+master
+  .add(CloudSmall(), 'start')
+  .add(largeCloud(), 'start-=25')
+  .add(mediumCloud(), 'start+=10');
