@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "description": "Amit & Xiana Site ",
   "main": "index.js",
+  "homepage": "https://alahmadiq8.github.io/google-lighthouse-animated",
   "scripts": {
     "start": "concurrently \"yarn server\" \"yarn watch-sass\" \"yarn babel-watch\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-sass": "sass --watch site/static/css/main.scss:site/static/css/main.css",
     "server": "lite-server",
     "babel": "babel site/src -d site/dist",
-    "babel-watch": "babel --watch site/src -d site/dist"
+    "babel-watch": "babel --watch site/src -d site/dist",
+    "deploy": "gh-pages -d site"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
     "concurrently": "^3.4.0",
+    "gh-pages": "^1.1.0",
     "lite-server": "^2.2.2"
   },
   "dependencies": {
