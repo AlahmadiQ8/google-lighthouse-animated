@@ -1,13 +1,20 @@
-TweenMax.set('.cloud-small', {
+CSSPlugin.defaultTransformPerspective = 500;
+TweenMax.defaultTransformPerspective = 500;
+
+TweenMax.set('#Cloud-1', {
   visibility: 'visible',
   x: '50%',
 });
 
-const CloudSmall = () => {
+// TweenMax.set('.ray', {
+//   x: 172
+// })
+
+const cloudSmall = function() {
   // TODO: cloud doesn't move exactly within `range`
   // cloud moves between -range/2 and range/2
   const range = 1300;
-  const tweenCloudSmall = TweenMax.to('.cloud-small', 40, {
+  const tweenCloudSmall = TweenMax.to('#Cloud-1', 50, {
     x: `+=${range}`,
     ease: Power0.easeNone,
     modifiers: {
@@ -18,10 +25,10 @@ const CloudSmall = () => {
   return tweenCloudSmall;
 };
 
-const largeCloud = () => {
+const largeCloud = function() {
   const initialPosition = 750;
   const rightEdge = 1450;
-  return TweenMax.to('.cloud-large', 50, {
+  return TweenMax.to('#Cloud-3', 50, {
     ease: Power0.easeNone,
     x: `+=${rightEdge}`,
     modifiers: {
@@ -31,11 +38,10 @@ const largeCloud = () => {
   });
 };
 
-const mediumCloud = () => {
+const mediumCloud = function() {
   const leftEdge = -1185;
   const rightEdge = 125;
   const range = rightEdge - leftEdge;
-  console.log(range);
   const tweenMediumCloud = TweenMax.to('.cloud-medium', 60, {
     x: `-=${range}`,
     ease: Power0.easeNone,
@@ -47,10 +53,23 @@ const mediumCloud = () => {
   return tweenMediumCloud;
 }
 
+const rayRotation = function() {
+  const tweenRayRotation = TweenMax.to('.ray', 3, {
+    // transformPerspective: 300,
+    rotationY: 360,
+    // rotation: 360,
+    transformOrigin: '100% 85px 50%',
+    yoyo: true,
+    repeat: -1,
+    ease: Power0.easeNone,
+  })
+  return tweenRayRotation;
+}
 
 const master = new TimelineMax();
 master.add('start');
 master
-  .add(CloudSmall(), 'start')
-  .add(largeCloud(), 'start-=25')
-  .add(mediumCloud(), 'start+=10');
+  // .add(cloudSmall(), 'start')
+  // .add(largeCloud(), 'start-=25')
+  .add(mediumCloud(), 'start+=10')
+  .add(rayRotation(), 'start');
