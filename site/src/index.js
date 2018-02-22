@@ -1,65 +1,46 @@
 CSSPlugin.defaultTransformPerspective = 500;
 TweenMax.defaultTransformPerspective = 500;
 
-TweenMax.set('#Cloud-1', {
-  visibility: 'visible',
-  x: '50%',
-});
+const WIDTH = 1135;
+const HEIGHT = 737;
+const NEGATIVE_OFFSET = 200;
 
-// TweenMax.set('.ray', {
-//   x: 172
-// })
 
 const cloudSmall = function() {
-  // TODO: cloud doesn't move exactly within `range`
-  // cloud moves between -range/2 and range/2
-  const range = 1300;
   const tweenCloudSmall = TweenMax.to('#Cloud-1', 50, {
-    x: `+=${range}`,
+    x: WIDTH,
     ease: Power0.easeNone,
-    modifiers: {
-      x: x => x % range - range / 2,
-    },
+    yoyo: true,
     repeat: -1,
   });
   return tweenCloudSmall;
 };
 
 const largeCloud = function() {
-  const initialPosition = 750;
-  const rightEdge = 1450;
   return TweenMax.to('#Cloud-3', 50, {
+    x: WIDTH,
     ease: Power0.easeNone,
-    x: `+=${rightEdge}`,
-    modifiers: {
-      x: x => x % (rightEdge + initialPosition) - initialPosition,
-    },
+    yoyo: true,
     repeat: -1,
   });
 };
 
 const mediumCloud = function() {
-  const leftEdge = -1185;
-  const rightEdge = 125;
-  const range = rightEdge - leftEdge;
-  const tweenMediumCloud = TweenMax.to('.cloud-medium', 60, {
-    x: `-=${range}`,
+  const tweenMediumCloud = TweenMax.from('#Cloud-2', 60, {
+    x: WIDTH,
     ease: Power0.easeNone,
-    modifiers: {
-      x: x => x % range +  Math.abs(rightEdge),
-    },
+    yoyo: true,
     repeat: -1,
   });
   return tweenMediumCloud;
 }
 
 const rayRotation = function() {
-  const tweenRayRotation = TweenMax.to('.ray', 3, {
-    // transformPerspective: 300,
-    rotationY: 360,
-    // rotation: 360,
-    transformOrigin: '100% 85px 50%',
-    yoyo: true,
+  const tweenRayRotation = TweenMax.to('#Ray', 3, {
+    transformPerspective: 2000,
+    rotationY: '-360',
+    // transformOrigin: '636px center',
+    transformOrigin: '636px center',
     repeat: -1,
     ease: Power0.easeNone,
   })
@@ -69,7 +50,7 @@ const rayRotation = function() {
 const master = new TimelineMax();
 master.add('start');
 master
-  // .add(cloudSmall(), 'start')
-  // .add(largeCloud(), 'start-=25')
-  .add(mediumCloud(), 'start+=10')
+  .add(cloudSmall(), 'start')
+  .add(largeCloud(), 'start-=15')
+  .add(mediumCloud(), 'start')
   .add(rayRotation(), 'start');
