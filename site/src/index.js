@@ -5,10 +5,12 @@ const WIDTH = 1135;
 const HEIGHT = 737;
 const NEGATIVE_OFFSET = 200;
 
+const getWidth = el => el.getBoundingClientRect().width;
 
 const cloudSmall = function() {
+  const el = document.getElementById('Cloud-1');
   const tweenCloudSmall = TweenMax.to('#Cloud-1', 50, {
-    x: WIDTH,
+    x: WIDTH - getWidth(el),
     ease: Power0.easeNone,
     yoyo: true,
     repeat: -1,
@@ -17,8 +19,9 @@ const cloudSmall = function() {
 };
 
 const largeCloud = function() {
-  return TweenMax.to('#Cloud-3', 50, {
-    x: WIDTH,
+  const el = document.getElementById('Cloud-3');
+  return TweenMax.to(el, 50, {
+    x: WIDTH - getWidth(el),
     ease: Power0.easeNone,
     yoyo: true,
     repeat: -1,
@@ -26,8 +29,9 @@ const largeCloud = function() {
 };
 
 const mediumCloud = function() {
+  const el = document.getElementById('Cloud-2');
   const tweenMediumCloud = TweenMax.from('#Cloud-2', 60, {
-    x: WIDTH,
+    x: WIDTH - getWidth(el),
     ease: Power0.easeNone,
     yoyo: true,
     repeat: -1,

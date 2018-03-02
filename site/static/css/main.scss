@@ -1,9 +1,19 @@
+$WIDTH: 1135px;
+$HEIGHT: 737px;
+$NEGATIVE_OFFSET: 200;
+
+
 .cloud-small {
   visibility: hidden;
 }
 
 .position-absolute {
   position: absolute;
+}
+
+.svg-container {
+  max-width: $WIDTH;
+  max-height: $HEIGHT;
 }
 
 @for $i from 100 through 110 {
