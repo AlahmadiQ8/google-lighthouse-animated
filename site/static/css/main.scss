@@ -3,12 +3,16 @@ $HEIGHT: 737px;
 $NEGATIVE_OFFSET: 200;
 
 
-.cloud-small {
+.cloud-small, #ray-source {
   visibility: hidden;
 }
 
 .position-absolute {
   position: absolute;
+}
+
+.overflow-visible {
+  overflow: visible !important;
 }
 
 .svg-container {
