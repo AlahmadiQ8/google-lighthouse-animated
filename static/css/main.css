@@ -1,8 +1,15 @@
-.cloud-small {
+.cloud-small, #ray-source {
   visibility: hidden; }
 
 .position-absolute {
   position: absolute; }
+
+.overflow-visible {
+  overflow: visible !important; }
+
+.svg-container {
+  max-width: 1135px;
+  max-height: 737px; }
 
 .z-index-100 {
   z-index: 100; }
