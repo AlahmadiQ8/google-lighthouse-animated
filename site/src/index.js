@@ -37,37 +37,64 @@ const mediumCloud = function() {
     repeat: -1,
   });
   return tweenMediumCloud;
-}
+};
 
-const rayRotation = function() {
-  const transformOriginX = 548 + 180/2.0;
-  const tweenRayRotation = TweenMax.to('#Ray', 3, {
+const rayRotation = function(duration) {
+  const transformOriginX = 548 + 180 / 2.0;
+  const tweenRayRotation = TweenMax.to('#Ray', duration, {
     transformPerspective: 3000,
     rotationY: '-360',
     repeat: -1,
     ease: Power0.easeNone,
-  })
+  });
   return tweenRayRotation;
-}
+};
 
-
-const raySource = function() {
+const raySource = function(duration) {
   const el = document.getElementById('ray-source');
   const maskEl = document.getElementById('ray-source-mask');
-  const diameter = el.getAttribute('rx');
+  const radius = el.getAttribute('rx');
   const maskWidth = getWidth(maskEl);
-  const start = -diameter;
-  const end = +diameter + maskWidth;
+  const start = -radius;
+  const end = +radius + maskWidth;
   TweenMax.set('#ray-source', { attr: { cx: end }, visibility: 'visible' });
-  const tween = TweenMax.to('#ray-source', 1.5, {
+  const tween = TweenMax.to('#ray-source', duration / 2, {
     attr: { cx: `${start}` },
     ease: Power0.easeNone,
     repeat: -1,
-    repeatDelay: 1.5,
+    repeatDelay: duration / 2,
   });
-  
+
   return tween;
-}
+};
+
+const rayShadowBottom = function(duration) {
+  const el = document.getElementById('ray-shadow-bottom');
+  const maskEl = document.getElementById('balcony-mask');
+  const radius = el.getAttribute('r');
+  const maskWidth = getWidth(maskEl);
+  const start = -radius;
+  const end = +radius + maskWidth;
+  TweenMax.set(el, { attr: { cx: end }, visibility: 'visible' });
+  const tween = TweenMax.to(el, duration / 2, {
+    attr: { cx: `${start}` },
+    ease: Power0.easeNone,
+    repeat: -1,
+    repeatDelay: duration / 2,
+  });
+
+  return tween;
+};
+
+const rayScene = function() {
+  const tl = new TimelineMax();
+  const duration = 3;
+  tl.add('ray');
+  tl.add(rayRotation(duration), 'ray');
+  tl.add(raySource(duration), `ray+=${duration / 2}`);
+  tl.add(rayShadowBottom(duration), `ray+=${duration / 2}`);
+  return tl;
+};
 
 const master = new TimelineMax();
 master.add('start');
@@ -75,5 +102,6 @@ master
   .add(cloudSmall(), 'start')
   .add(largeCloud(), 'start-=15')
   .add(mediumCloud(), 'start')
-  .add(rayRotation(), 'start')
-  .add(raySource(), 'start+=1.5')
+  .add(rayScene(), 'start');
+// .add(rayRotation(), 'start')
+// .add(raySource(), 'start+=1.5')
